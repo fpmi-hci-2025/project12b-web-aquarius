@@ -20,10 +20,13 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
+        working-directory: ../bookstore
         run: npm ci
 
       - name: Run tests
+        working-directory: ../bookstore
         run: npm test
 
       - name: Build project
+        working-directory: ../bookstore
         run: npm run build
