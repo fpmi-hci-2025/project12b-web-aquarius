@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aquarius-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - nginx
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    container_name: aquarius-nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./bookstore/build:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+    restart: always
