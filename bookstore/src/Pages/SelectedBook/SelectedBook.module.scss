@@ -1,0 +1,278 @@
+.bookCard {
+  .container {
+    max-width: 900px;
+    padding: 72px 15px 15px 0;
+    margin: auto;
+    .homeBookWrap {
+      width: 270px;
+      display: flex;
+      align-items: center;
+
+      .homeBtn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 400;
+        &:hover {
+          color: #2231aa;
+        }
+      }
+      .bookId {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: #5360cd;
+
+        margin: 0;
+        &::before {
+          content: "|";
+          display: block;
+          margin-right: 15px;
+        }
+      }
+    }
+    .bookCardWrap {
+      .bookCardInf {
+        max-width: 836px;
+        margin: auto;
+        .bookCardWrapUp {
+          .imgWrap {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 48px;
+            max-height: 450px;
+            max-width: 836px;
+            overflow: hidden;
+            .bookCardImg {
+              object-fit: cover;
+              object-position: center;
+            }
+          }
+          .bookCardTitle {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 48px;
+          }
+
+          .bookDecription {
+            max-width: 800px;
+            margin-bottom: 40px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 32px;
+            text-align: left;
+          }
+          .bookInfTable {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+
+            margin-bottom: 80px;
+            border: 0.5px solid#2231aa;
+
+            .bookTableValue {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 20px;
+              border: 0.5px solid #2231aa;
+            }
+          }
+        }
+        .saveDotsWrap {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 72px;
+
+          .interactivePart {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+            width: 100%;
+
+            cursor: pointer;
+            .faBookmark {
+              height: 100%;
+              padding: 10px;
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              border: none;
+              background-color: #5360cd;
+              border-radius: 2px;
+              color: #fff;
+              &::after {
+                content: "Add to favorites";
+                color: #fff;
+                margin-left: 15px;
+                font-family: Inter;
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 2px;
+              }
+              &:hover {
+                color: #5360cd;
+              }
+              &:active {
+                color: #2231aa;
+              }
+            }
+            .faCartShopping {
+              height: 100%;
+              padding: 10px;
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              border: none;
+              background-color: #5360cd;
+              border-radius: 2px;
+              color: #fff;
+              &::after {
+                content: "Add to cart";
+                color: #fff;
+                margin-left: 15px;
+                font-family: Inter;
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 24px;
+              }
+              &:hover {
+                color: #5360cd;
+              }
+              &:active {
+                color: #2231aa;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .numbersWrapper {
+      display: flex;
+      width: 100%;
+      padding: 15px 0;
+      flex-direction: row;
+      justify-content: space-between;
+      border-top: 1px solid rgba(218, 218, 218, 1);
+      padding: 36px 0 0 0;
+      margin-bottom: 21px;
+
+      .leftArrowWrap {
+        width: 400px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .leftArrow {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          margin-right: 10px;
+
+          &:disabled {
+            color: rgba(141, 142, 151, 1);
+            cursor: not-allowed;
+          }
+
+          .leftArrowSvg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+          }
+        }
+        .prevWrap {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+          .prevBtn {
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 600;
+
+            &:disabled {
+              color: rgba(141, 142, 151, 1);
+              cursor: not-allowed;
+            }
+          }
+          .prevTitle {
+            font-family: Inter;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(141, 142, 151, 1);
+          }
+        }
+      }
+
+      .rightArrowWrap {
+        width: 400px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        .rightArrow {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          margin-left: 10px;
+          &:disabled {
+            color: rgba(141, 142, 151, 1);
+            cursor: not-allowed;
+          }
+
+          .rightArrowSvg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+          }
+        }
+
+        .nextWrap {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-end;
+
+          .nextBtn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 600;
+
+            &:disabled {
+              color: rgba(141, 142, 151, 1);
+              cursor: not-allowed;
+            }
+          }
+          .nextTitle {
+            font-family: Inter;
+            font-size: 13px;
+            font-weight: 400;
+            text-align: end;
+            color: rgba(141, 142, 151, 1);
+          }
+        }
+      }
+    }
+  }
+}

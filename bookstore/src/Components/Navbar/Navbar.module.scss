@@ -1,0 +1,99 @@
+.navbar {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 83px;
+  width: 236px;
+  height: calc(100vh - 83px);
+  background: #ffffff;
+
+  left: -100%;
+  transition: all 1s;
+
+  .navbarBtnsWrap {
+    .navbarBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 82px;
+      border-bottom: 1px solid rgba(218, 218, 218, 1);
+      cursor: pointer;
+
+      &:first-child {
+        border-top: 1px solid rgba(83, 96, 205, 1);
+        border-bottom: none;
+        cursor: auto;
+      }
+
+      .navbarLink {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        color: rgba(49, 48, 55, 1);
+        text-decoration: none;
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+    }
+  }
+  .themeAndLogOutWrap {
+    display: flex;
+    flex-direction: column;
+
+    .themeWrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
+      width: 100%;
+      height: 82px;
+      border: none;
+      border-top: 1px solid rgba(232, 232, 232, 1);
+      cursor: pointer;
+
+      .themeBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        height: 100%;
+        width: 50%;
+
+        &:first-child {
+          border-right: 1px solid rgba(232, 232, 232, 1);
+        }
+      }
+    }
+    .logOutBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 82px;
+      border: none;
+      background-color: rgba(232, 232, 232, 1);
+      color: rgba(49, 48, 55, 1);
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
+.navbar.active {
+  left: 0;
+}
+.navbarBtn.active {
+  p {
+    color: rgba(34, 49, 170, 1);
+  }
+  .navbarLink {
+  }
+}

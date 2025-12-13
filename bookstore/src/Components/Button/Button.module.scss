@@ -1,0 +1,30 @@
+.primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(34, 49, 170, 1);
+  width: 132px;
+  height: 56px;
+  padding: 16px 32px 16px 32px;
+  border: 1px #fff solid;
+  border-radius: 2px 0px 0px 0px;
+  color: rgba(255, 255, 255, 1);
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(232, 232, 232, 1);
+  width: 132px;
+  height: 56px;
+  padding: 16px 32px 16px 32px;
+  border-radius: 2px 0px 0px 0px;
+  color: rgba(49, 48, 55, 1);
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 600;
+}

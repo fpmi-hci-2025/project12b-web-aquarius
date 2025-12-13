@@ -1,0 +1,14 @@
+.cartBtn {
+  height: 100%;
+  width: 108px;
+  background-color: #2231aa;
+  border: none;
+  border-left: 1px solid #5360cd;
+  border-right: 1px solid #5360cd;
+  cursor: pointer;
+  .cartIcon {
+    fill: #fff;
+    width: 24px;
+    height: 24px;
+  }
+}

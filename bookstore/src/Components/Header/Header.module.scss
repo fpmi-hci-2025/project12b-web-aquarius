@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  width: 100vw;
+  height: 84px;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: #2231aa;
+  .headerWrap {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .searchPesonBtn {
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .header {
+    .headerWrap {
+      .searchPesonBtn {
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.bookstore {
+  .container {
+    max-width: 900px;
+    padding: 72px 15px 15px 0;
+    margin: auto;
+    .backHomeBtn {
+      text-decoration: none;
+
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 32px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

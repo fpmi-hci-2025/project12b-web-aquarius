@@ -1,0 +1,321 @@
+.container {
+  max-width: 900px;
+  padding: 72px 15px 15px 0;
+  margin: auto;
+  .backHomeBtn {
+    text-decoration: none;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 28px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .booksCardWrap {
+    .bookCardWrap {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 39px;
+      .bookCardWrapMiddleandLittle {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        .bookCardWrapMiddles {
+          display: flex;
+          justify-content: space-between;
+
+          width: 66%;
+          margin-right: 15px;
+          .bookCardWrapMiddle {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            border-bottom: 1px rgba(218, 218, 218, 1) solid;
+            margin-right: 15px;
+            .bookCardWrapUp {
+              display: flex;
+              flex-direction: column-reverse;
+              margin-right: 10px;
+              justify-content: space-between;
+              .bookCardWrapLeft {
+                display: flex;
+                flex-direction: column;
+                margin-right: 3px;
+                .bookCardDate {
+                  display: flex;
+                  justify-content: start;
+                  color: rgba(141, 142, 151, 1);
+                  font-family: Inter;
+                  font-size: 16px;
+                  font-weight: 400;
+                  line-height: 24px;
+                  margin-bottom: 8px;
+                }
+                .bookCardTitle {
+                  margin-bottom: 24px;
+                  font-family: Inter;
+                  font-size: 18px;
+                  font-weight: 600;
+                  line-height: 28px;
+                }
+              }
+              .bookCardWrapRight {
+                display: flex;
+                flex-direction: column;
+
+                .imgWrap {
+                  height: 250px;
+                  width: 290px;
+                  border: 1px solid;
+                  overflow: hidden;
+                  .bookCardImg {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                  }
+                }
+              }
+
+              .bookCardWrapDown {
+                display: none;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-bottom: 40px;
+                .thumbsWrap {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  align-items: center;
+                  width: 130px;
+
+                  .thumbsUpWrap {
+                    width: 53px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+                  .thumbsDownWrap {
+                    width: 53px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+                }
+                .saveDotsWrap {
+                  .saveDots {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 64px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .bookCardWrapLittles {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+
+        .bookCardWrapLittle {
+          display: flex;
+          flex-direction: column;
+          justify-content: end;
+          margin-bottom: 39px;
+          border-bottom: 1px rgba(218, 218, 218, 1) solid;
+          .bookCardWrapUp {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .bookCardWrapLeft {
+              display: flex;
+              flex-direction: column;
+              margin-right: 3px;
+              .bookCardDate {
+                display: flex;
+                justify-content: start;
+                color: rgba(141, 142, 151, 1);
+                font-family: Inter;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 24px;
+                margin-bottom: 8px;
+              }
+              .bookCardTitle {
+                margin-bottom: 24px;
+                font-family: Inter;
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 28px;
+              }
+            }
+            .bookCardWrapRight {
+              display: flex;
+              flex-direction: column;
+              justify-content: start;
+              align-items: end;
+              .imgWrap {
+                height: 96px;
+                width: 96px;
+                border: 1px solid;
+                overflow: hidden;
+                .bookCardImg {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  object-position: center;
+                }
+              }
+            }
+          }
+
+          .bookCardWrapDown {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            .thumbsWrap {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              width: 130px;
+
+              .thumbsUpWrap {
+                width: 53px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .thumbsDownWrap {
+                width: 53px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+              }
+            }
+            .saveDotsWrap {
+              .saveDots {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 64px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .numbersWrapper {
+    display: flex;
+    width: 100%;
+    padding: 15px 0;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .leftArrowWrap {
+      width: 110px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .leftArrow {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        &:disabled {
+          color: rgba(141, 142, 151, 1);
+          cursor: not-allowed;
+        }
+
+        .leftArrowSvg {
+          width: 24px;
+          height: 24px;
+          fill: currentColor;
+        }
+      }
+      .prevWrap {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 600;
+
+        &:disabled {
+          color: rgba(141, 142, 151, 1);
+          cursor: not-allowed;
+        }
+      }
+    }
+    .pageNubmers {
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+      .numbers {
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    .rightArrowWrap {
+      width: 110px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .rightArrow {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        &:disabled {
+          color: rgba(141, 142, 151, 1);
+          cursor: not-allowed;
+        }
+
+        .rightArrowSvg {
+          width: 24px;
+          height: 24px;
+          fill: currentColor;
+        }
+      }
+
+      .nextWrap {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 600;
+
+        &:disabled {
+          color: rgba(141, 142, 151, 1);
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

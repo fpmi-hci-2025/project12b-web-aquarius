@@ -1,0 +1,162 @@
+.popUpBackground {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(38, 34, 47, 0.5);
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 10;
+  cursor: auto;
+  .popUp {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 78%;
+    background-color: #fff;
+    @media (max-width: 320px) {
+      width: 100%;
+      height: 60%;
+    }
+    .cancelWrap {
+      display: flex;
+      justify-content: flex-end;
+      align-self: flex-end;
+      padding: 20px 20px 0 0;
+      .cancel {
+        cursor: pointer;
+        fill: rgba(76, 75, 94, 1);
+      }
+    }
+    .bookCardWrapMain {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      padding: 30px 20px;
+      margin: auto;
+
+      width: 80%;
+      height: 82%;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      .bookCardWrapUp {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 31px;
+        .bookCardWrapLeft {
+          display: flex;
+          flex-direction: column;
+          margin-right: 5px;
+          .bookCardDate {
+            display: flex;
+            justify-content: start;
+            color: rgba(141, 142, 151, 1);
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            margin-bottom: 2px;
+          }
+          .bookCardTitle {
+            margin: 0;
+            margin-bottom: 24px;
+
+            .bookCardTitleLink {
+              color: rgba(76, 75, 94, 1);
+
+              &:hover {
+                cursor: pointer;
+                color: rgba(83, 96, 205, 1);
+                &:active {
+                  color: rgba(34, 49, 170, 1);
+                }
+              }
+            }
+          }
+          .bookCardSubtitle {
+            color: rgba(141, 142, 151, 1);
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 28px;
+          }
+        }
+        .bookCardWrapRight {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          .imgWrap {
+            height: 200px;
+            width: 200px;
+            overflow: hidden;
+            .bookCardImg {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center;
+            }
+          }
+        }
+      }
+
+      .bookCardWrapDown {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        border-bottom: 1px rgba(218, 218, 218, 1) solid;
+        padding-bottom: 30px;
+        .thumbsWrap {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 130px;
+
+          .thumbsUpWrap {
+            width: 53px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(76, 75, 94, 1);
+          }
+          .thumbsDownWrap {
+            width: 53px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(76, 75, 94, 1);
+          }
+        }
+        .saveDotsWrap {
+          .saveDots {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 64px;
+            color: rgba(76, 75, 94, 1);
+            .faBookmark {
+              background-color: transparent;
+              color: rgba(76, 75, 94, 1);
+              border: none;
+
+              &:hover {
+                color: rgba(83, 96, 205, 1);
+              }
+              &:active {
+                color: rgba(34, 49, 170, 1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

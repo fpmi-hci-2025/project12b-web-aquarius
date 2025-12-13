@@ -1,0 +1,13 @@
+.bookstore {
+  .container {
+    max-width: 900px;
+    padding: 72px 15px 15px 0;
+    margin: auto;
+    .booksWrap {
+      display: grid;
+      justify-content: space-between;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+}

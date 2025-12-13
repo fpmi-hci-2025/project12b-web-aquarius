@@ -1,0 +1,24 @@
+.textareaWrap {
+  display: flex;
+  flex-direction: column;
+
+  .textareaLabel {
+    width: 34px;
+    height: 20px;
+    color: rgba(49, 48, 55, 1);
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .textarea {
+    width: 100%;
+    background-color: #fff;
+    color: rgba(49, 48, 55, 1);
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 20px;
+    border-radius: 2px;
+  }
+}

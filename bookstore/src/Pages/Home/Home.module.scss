@@ -1,0 +1,27 @@
+.bookstore {
+  .container {
+    max-width: 900px;
+    padding: 72px 15px 15px 0;
+    margin: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookstore {
+    .container {
+      max-width: 688px;
+      padding: 0;
+      margin: auto;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .bookstore {
+    .container {
+      max-width: 270px;
+      padding: 0;
+      margin: auto;
+    }
+  }
+}

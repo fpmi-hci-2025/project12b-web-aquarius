@@ -1,0 +1,97 @@
+.numbersWrapper {
+  display: flex;
+  width: 100%;
+  padding: 15px 0;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .leftArrowWrap {
+    width: 110px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .leftArrow {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      &:disabled {
+        color: rgba(141, 142, 151, 1);
+        cursor: not-allowed;
+      }
+
+      .leftArrowSvg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+      }
+    }
+    .prevWrap {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 600;
+
+      &:disabled {
+        color: rgba(141, 142, 151, 1);
+        cursor: not-allowed;
+      }
+    }
+  }
+  .pageNubmers {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    .numbers {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 600;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .rightArrowWrap {
+    width: 110px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .rightArrow {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      &:disabled {
+        color: rgba(141, 142, 151, 1);
+        cursor: not-allowed;
+      }
+
+      .rightArrowSvg {
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+      }
+    }
+
+    .nextWrap {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 600;
+
+      &:disabled {
+        color: rgba(141, 142, 151, 1);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
