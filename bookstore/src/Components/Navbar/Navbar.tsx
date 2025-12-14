@@ -20,7 +20,10 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isActive } = useSelector((state: IActive) => state.active)
-  const { auth } = useSelector((state: ISignIn) => state.signIn)
+  const { auth, username } = useSelector((state: ISignIn) => state.signIn)
+
+  // Check if user is admin
+  const isAdmin = auth && username === "admin@mail.ru"
 
   const logOutHandler = () => {
     dispatch(logout())
@@ -66,6 +69,21 @@ const Navbar = () => {
             <p>Bookmarks</p>
           </Link>
         </div>
+        {isAdmin && (
+          <div
+            className={`${style.navbarBtn} ${
+              btnIsActive("/create-book") ? style.active : ""
+            }`}
+          >
+            <Link
+              to="/create-book"
+              className={style.navbarLink}
+              onClick={() => dispatch(toggleActive())}
+            >
+              <p>Create book</p>
+            </Link>
+          </div>
+        )}
       </div>
       <div className={style.themeAndLogOutWrap}>
         <button onClick={theme?.toggleTheme} className={style.themeWrap}>

@@ -12,6 +12,7 @@ import myBooksSlice from "./myBooksSlice"
 import searchSlice from "./searchSlice"
 import userSlice from "./userSlice"
 import cartSlice from "./cartSlice"
+import createBookSlice from "./CreateBookSlice"
 
 export default configureStore({
   reducer: {
@@ -28,5 +29,6 @@ export default configureStore({
     myBooks: myBooksSlice,
     user: userSlice,
     cart: cartSlice,
+    createBook: createBookSlice,
   },
 })

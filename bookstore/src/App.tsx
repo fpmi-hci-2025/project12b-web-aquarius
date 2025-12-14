@@ -15,6 +15,7 @@ import CartPage from "./Pages/CartPage/CartPage"
 import ResetPassword from "./Pages/ResetPassword/ResetPassword"
 import NewPassword from "./Pages/NewPassword/NewPassword"
 import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute"
+import CreateBook from "./Pages/CreateBook/CreateBook"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { refreshTokens } from "./store/signInSlice"
@@ -49,6 +50,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/create-book" element={<CreateBook />} />
           <Route path="activate/:uid/:token" element={<Success />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/new-password" element={<NewPassword />} />
