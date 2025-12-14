@@ -17,14 +17,24 @@ import NewPassword from "./Pages/NewPassword/NewPassword"
 import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute"
 import CreateBook from "./Pages/CreateBook/CreateBook"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { refreshTokens } from "./store/signInSlice"
 import { hydrateFromLocalStorage } from "./store/bookSlice"
 import Payment from "./Pages/Payment/Payment"
 import Checkout from "./Pages/Checkout/Checkout"
+import { fetchCart } from "./store/cartSlice"
+import { AsyncThunkAction, AsyncThunkConfig } from "@reduxjs/toolkit"
+import { IBookCard } from "./types/types"
 
 const App = () => {
   const dispatch = useDispatch()
+  const { auth } = useSelector((state: any) => state.signIn)
+
+  useEffect(() => {
+    if (auth) {
+      dispatch(fetchCart())
+    }
+  }, [auth, dispatch])
 
   useEffect(() => {
     // Restore bookmarks and cart from localStorage on app init
@@ -66,3 +76,12 @@ const App = () => {
 }
 
 export default App
+function dispatch(
+  arg0: AsyncThunkAction<
+    { bookmarks: IBookCard[]; cart: IBookCard[] },
+    void,
+    AsyncThunkConfig
+  >
+) {
+  throw new Error("Function not implemented.")
+}

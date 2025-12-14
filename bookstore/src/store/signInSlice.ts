@@ -47,6 +47,8 @@ export const signInUser = createAsyncThunk(
           data?.detail || data?.message || "Sign-in failed"
         )
       }
+      localStorage.setItem("accessToken", data.accessToken)
+      localStorage.setItem("refreshToken", data.refreshToken)
       // expect { accessToken, refreshToken }
       return { ...data, email: credentials.email }
     } catch (e: any) {
@@ -112,12 +114,17 @@ const signInSlice = createSlice({
         state.isLoading = true
         state.error = null
       })
+
       .addCase(signInUser.fulfilled, (state, action: PayloadAction<any>) => {
         state.isLoading = false
         state.auth = true
         state.username = action.payload?.email || state.username
+        state.accessToken = action.payload.accessToken
 
+        localStorage.setItem("accessToken", action.payload.accessToken)
         // Save firstName and lastName from userDetails
+        console.log("New token stored:", localStorage.getItem("accessToken"))
+
         if (action.payload?.userDetails) {
           state.firstName = action.payload.userDetails.firstName || null
           state.lastName = action.payload.userDetails.lastName || null

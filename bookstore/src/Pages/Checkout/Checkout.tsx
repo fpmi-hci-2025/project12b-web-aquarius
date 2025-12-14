@@ -1,96 +1,135 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import style from "./Checkout.module.scss"
 import { useSelector } from "react-redux"
 import { IBookCard } from "../../types/types"
 import { useNavigate } from "react-router-dom"
 import Input from "../../Components/Input/Input"
+import { useDispatch } from "react-redux"
+import { createOrder } from "../../store/orderSlice"
+import { fetchCart } from "../../store/cartSlice"
 
 const parsePrice = (p: any): number => {
+  console.log("Parsing price:", p, typeof p)
+
   if (typeof p === "number") return p
   if (!p) return 0
-  // remove non-digit except dot and comma
+
   const s = String(p)
     .replace(/[^0-9.,-]/g, "")
     .replace(/,/g, ".")
   const n = parseFloat(s)
-  return isNaN(n) ? 0 : n
+  const result = isNaN(n) ? 0 : n
+  console.log("Parsed result:", result)
+  return result
 }
-
 const Checkout = () => {
   const navigate = useNavigate()
   const { auth } = useSelector((state: any) => state.signIn)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken")
+    if (!token) {
+      navigate("/sign-in")
+      return
+    }
+
+    if (auth) {
+      dispatch(fetchCart() as any)
+    }
+  }, [auth, dispatch])
 
   const localCart: IBookCard[] = useSelector(
     (state: any) => state.books.cart || []
   )
   const serverCart: any[] = useSelector((state: any) => state.cart.items || [])
 
-  const items = auth
-    ? serverCart.map((it) => ({
-        id: it.bookId || it.id,
-        title: it.title || "",
-        price: parsePrice(it.price),
-        quantity: it.quantity || 1,
-      }))
-    : localCart.map((it: any) => ({
-        id: it.isbn13 || it.id,
+  const cartItems = useSelector((state: any) => state.cart.items || [])
+  useEffect(() => {
+    console.log("Full cart items:", cartItems)
+    console.log(
+      "Cart items mapped:",
+      cartItems.map((it: any) => ({
+        id: it.bookId,
         title: it.title,
-        price: parsePrice(it.price),
-        quantity: 1,
+        price: it.price,
+        rawPrice: it.price,
+        parsedPrice: parsePrice(it.price),
       }))
+    )
+  }, [cartItems])
 
-  const [quantities, setQuantities] = useState<Record<string, number>>(() => {
-    const map: Record<string, number> = {}
-    items.forEach((it) => {
-      map[it.id] = it.quantity
-    })
-    return map
-  })
+  const items = useMemo(
+    () =>
+      cartItems.map((it: any) => ({
+        id: it.bookId,
+        title: it.title,
+        price: parsePrice(it.price), // Парсим здесь
+        rawPrice: it.price, // Сохраняем оригинальную цену для отладки
+        quantity: it.quantity ?? 1,
+      })),
+    [cartItems]
+  )
+
+  const [quantities, setQuantities] = useState<Record<string, number>>({})
 
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
 
   const lineItems = useMemo(() => {
-    return items.map((it) => {
+    return items.map((it: { id: string | number; price: number }) => {
       const qty = quantities[it.id] || 0
       return { ...it, quantity: qty, lineTotal: it.price * qty }
     })
   }, [items, quantities])
+  console.log("ITEMS", items)
+  console.log("QUANTITIES", quantities)
+  console.log("LINE ITEMS", lineItems)
 
-  const itemsTotal = lineItems.reduce((s, i) => s + i.lineTotal, 0)
+  const itemsTotal = lineItems.reduce(
+    (s: any, i: { lineTotal: any }) => s + i.lineTotal,
+    0
+  )
   const delivery = 0
   const total = itemsTotal + delivery
+
+  const orderItems = lineItems
+    .filter((i: { quantity: number }) => i.quantity > 0)
+    .map((i: { id: any; quantity: any }) => ({
+      bookId: i.id,
+      count: i.quantity,
+    }))
 
   const updateQty = (id: string, value: number) => {
     setQuantities((prev) => ({ ...prev, [id]: Math.max(0, Math.floor(value)) }))
   }
 
-  const onSubmit = () => {
-    const totalItems = Object.values(quantities).reduce((s, x) => s + x, 0)
-    if (totalItems <= 0) {
-      alert("Cart is empty. Cannot checkout.")
-      return
-    }
-    if (!email || !/.+@.+\..+/.test(email)) {
-      alert("Please provide a valid email")
-      return
-    }
+  const onSubmit = async () => {
     if (!address.trim()) {
       alert("Please provide delivery address")
       return
     }
 
-    const order = {
-      items: lineItems,
-      itemsTotal,
-      delivery,
-      total,
-      customer: { email, name, address },
+    if (orderItems.length === 0) {
+      alert("Корзина пуста")
+      return
     }
 
-    // In a real app we'd POST to backend here then redirect to payment.
-    navigate("/payment", { state: { order } })
+    const result = await dispatch(
+      createOrder({
+        deliveryAddress: address,
+        customerNotes: `Email: ${email}, Name: ${name}`,
+        items: orderItems,
+      }) as any
+    )
+
+    if (createOrder.fulfilled.match(result)) {
+      const orderId = result.payload.id
+      navigate(`/payment/${orderId}`)
+    } else {
+      alert("Ошибка создания заказа")
+    }
   }
 
   return (
@@ -113,11 +152,13 @@ const Checkout = () => {
                 <td>{it.title}</td>
                 <td>{it.price.toFixed(2)}</td>
                 <td>
-                  <input
-                    type="number"
-                    min={0}
-                    value={it.quantity}
-                    onChange={(e) => updateQty(it.id, Number(e.target.value))}
+                  <Input
+                    name="quantity"
+                    placeholder="Quantity"
+                    inputEvent={(e) => updateQty(it.id, Number(e.target.value))}
+                    title={""}
+                    type={"text"}
+                    value={quantities[it.id] ?? it.quantity}
                   />
                 </td>
                 <td>{it.lineTotal.toFixed(2)}</td>

@@ -2,6 +2,48 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const API = "https://bookstore-backend-qgjq.onrender.com/api"
 
+// export const createOrder = createAsyncThunk(
+//   "orders/create",
+//   async (
+//     {
+//       deliveryAddress,
+//       customerNotes,
+//       items,
+//     }: {
+//       deliveryAddress: string
+//       customerNotes?: string
+//       items: { bookId: string; count: number }[]
+//     },
+//     { rejectWithValue }
+//   ) => {
+//     try {
+//       const token = localStorage.getItem("accessToken")
+
+//       const res = await fetch(`${API}/orders`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({
+//           deliveryAddress,
+//           customerNotes,
+//           orderItems: items,
+//         }),
+//       })
+
+//       if (!res.ok) {
+//         const err = await res.json()
+//         return rejectWithValue(err.message || "Order failed")
+//       }
+
+//       return await res.json() // ← order object
+//     } catch (e: any) {
+//       return rejectWithValue(e.message)
+//     }
+//   }
+// )
+// orderSlice.ts - добавьте логирование
 export const createOrder = createAsyncThunk(
   "orders/create",
   async (
@@ -18,6 +60,16 @@ export const createOrder = createAsyncThunk(
   ) => {
     try {
       const token = localStorage.getItem("accessToken")
+      console.log("Creating order with token:", token)
+      console.log("Order items:", items)
+      console.log("Delivery address:", deliveryAddress)
+
+      const payload = {
+        deliveryAddress,
+        customerNotes,
+        orderItems: items,
+      }
+      console.log("Sending payload:", JSON.stringify(payload, null, 2))
 
       const res = await fetch(`${API}/orders`, {
         method: "POST",
@@ -25,20 +77,22 @@ export const createOrder = createAsyncThunk(
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          deliveryAddress,
-          customerNotes,
-          orderItems: items,
-        }),
+        body: JSON.stringify(payload),
       })
+
+      console.log("Order response status:", res.status)
 
       if (!res.ok) {
         const err = await res.json()
-        return rejectWithValue(err.message || "Order failed")
+        console.error("Order error:", err)
+        return rejectWithValue(err.message || err.detail || "Order failed")
       }
 
-      return await res.json() // ← order object
+      const result = await res.json()
+      console.log("Order created successfully:", result)
+      return result
     } catch (e: any) {
+      console.error("Order exception:", e)
       return rejectWithValue(e.message)
     }
   }

@@ -26,6 +26,7 @@ const Input = ({
         className={style.input}
         type={type}
         placeholder={placeholder}
+        value={value}
         onChange={inputEvent}
       />
     </div>

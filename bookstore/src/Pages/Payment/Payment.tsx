@@ -1,13 +1,14 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import style from "./Payment.module.scss"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { payOrder } from "../../store/orderSlice"
 
 const Payment = () => {
-  const { state } = useLocation()
   const navigate = useNavigate()
+
   const { orderId } = useParams()
   const dispatch = useDispatch()
+  const { currentOrder, loading } = useSelector((state: any) => state.orders)
 
   const onPay = async () => {
     await dispatch(payOrder(orderId!) as any)
@@ -29,13 +30,20 @@ const Payment = () => {
       <div className={style.container}>
         <h2>Payment</h2>
         <div className={style.orderBox}>
-          <div>Items: {orderId.items.length}</div>
+          {/* <div>Items: {orderId.items.length}</div>
           <div>Items total: {Number(orderId.itemsTotal).toFixed(2)}</div>
           <div>Delivery: {Number(orderId.delivery).toFixed(2)}</div>
           <div>
             <strong>Total: {Number(orderId.total).toFixed(2)}</strong>
           </div>
-          <button onClick={onPay}>Оплатить</button>
+          <button onClick={onPay}>Оплатить</button> */}
+          {currentOrder && (
+            <>
+              <div>Items: {currentOrder.items.length}</div>
+              <div>Total: {currentOrder.totalAmount}</div>
+            </>
+          )}
+
           <div style={{ marginTop: 8 }}>
             <button onClick={() => navigate("/")}>Return Home</button>
           </div>
