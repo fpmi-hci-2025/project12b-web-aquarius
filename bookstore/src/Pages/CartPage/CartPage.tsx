@@ -39,6 +39,12 @@ const CartPage = () => {
   if (paginationError) {
     return <div>Error...</div>
   }
+  const books = useSelector((state: any) => state.pagination.books)
+
+  const getBookImage = (bookId: string) => {
+    const book = books.find((b: any) => b.isbn13 === bookId)
+    return book?.image || "/placeholder.png"
+  }
 
   // Выбираем правильную корзину и добавляем уникальные ключи
   const itemsArray: IBookCard[] = auth
@@ -47,7 +53,8 @@ const CartPage = () => {
         isbn13: item.bookId,
         title: item.title || "Unknown title",
         price: `$${parseFloat(item.price || "0").toFixed(2)}`,
-        image: item.image || "/placeholder.png",
+        image: getBookImage(item.bookId),
+
         url: `/books/${item.bookId}`,
         subtitle: "",
         authors: "",

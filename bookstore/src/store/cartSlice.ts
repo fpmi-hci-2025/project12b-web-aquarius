@@ -140,27 +140,28 @@ const cartSlice = createSlice({
         const response = action.payload
 
         if (response.cartItems && Array.isArray(response.cartItems)) {
-          // Обрабатываем данные с сервера правильно
           state.items = response.cartItems.map((item: any) => {
-            // Проверяем различные возможные поля для картинки
-            const image =
-              item.image ||
-              item.bookImage ||
-              item.imageUrl ||
-              `/placeholder.png`
-
-            // Проверяем различные возможные поля для названия
             const title = item.bookTitle || item.title || "Unknown title"
 
-            // Проверяем различные возможные поля для цены
             const price =
               item.bookPrice?.toString() || item.price?.toString() || "0"
+            const normalizeImage = (image: string) => {
+              if (!image) return "/placeholder.png"
+
+              if (image.startsWith("http") || image.startsWith("data:image")) {
+                return image
+              }
+
+              return image.startsWith("/") ? image : `${API}/${image}`
+            }
 
             return {
               bookId: item.bookId || item.id,
               title,
               price,
-              image: image.startsWith("http") ? image : `${API}${image}`,
+              image: normalizeImage(
+                item.image || item.bookImage || item.imageUrl
+              ),
               quantity: item.quantity || 1,
             }
           })
