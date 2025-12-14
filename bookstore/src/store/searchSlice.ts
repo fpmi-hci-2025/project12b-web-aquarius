@@ -2,35 +2,25 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { mapBackendBookToDetails } from "../utils/mapBackendBookToDetails"
 
 export const searchBooks = createAsyncThunk(
-  "books/searchBooks",
-  async (objectFromBooksPage, { rejectWithValue }) => {
-    let { query }: any = objectFromBooksPage
-
+  "search/searchBooks",
+  async ({ query }: { query: string }, { rejectWithValue }) => {
     try {
-      const url = new URL(
+      const response = await fetch(
         "https://bookstore-backend-qgjq.onrender.com/api/books/search"
       )
-      if (query) {
-        url.searchParams.append("query", query)
-      }
-
-      const response = await fetch(url.toString())
 
       if (!response.ok) {
-        throw new Error("error")
+        throw new Error("Failed to fetch books")
       }
 
       const data = await response.json()
 
-      // Map backend response to IBookCard format
-      const books = Array.isArray(data) ? data : data.books || []
-      const mappedBooks = books.map((book: any) =>
-        mapBackendBookToDetails(book)
-      )
+      // backend возвращает массив
+      const books = Array.isArray(data) ? data : []
 
-      return mappedBooks
-    } catch (error: any) {
-      return rejectWithValue(error.message || "error")
+      return { books, query }
+    } catch (e: any) {
+      return rejectWithValue(e.message || "Search error")
     }
   }
 )
@@ -38,24 +28,25 @@ export const searchBooks = createAsyncThunk(
 const searchSlice = createSlice({
   name: "search",
   initialState: {
+    allBooks: [] as any[],
     books: [],
-    totalItems: 0,
     currentPage: 1,
     itemsPerPage: 10,
+    totalItems: 0,
     searchQueryTitle: "",
     searchQuery: "",
     loading: false,
     error: null as string | null,
   },
   reducers: {
-    setPage: (state, action) => {
+    setPage(state, action) {
       state.currentPage = action.payload
     },
-    setSearchQueryTitle: (state, action) => {
-      state.searchQueryTitle = action.payload
-    },
-    setSearchQuery: (state, action) => {
+    setSearchQuery(state, action) {
       state.searchQuery = action.payload
+    },
+    setSearchQueryTitle(state, action) {
+      state.searchQueryTitle = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -65,8 +56,24 @@ const searchSlice = createSlice({
         state.error = null
       })
       .addCase(searchBooks.fulfilled, (state, action) => {
+        const { books, query } = action.payload
+
         state.loading = false
-        state.books = action.payload || []
+        state.currentPage = 1
+        state.allBooks = books
+
+        const q = query.toLowerCase()
+
+        const filtered = books.filter((b: any) => {
+          return (
+            b.title?.toLowerCase().includes(q) ||
+            b.description?.toLowerCase().includes(q) ||
+            b.publisher?.toLowerCase().includes(q) ||
+            b.authors?.join(" ").toLowerCase().includes(q)
+          )
+        })
+
+        state.books = filtered.map(mapBackendBookToDetails)
         state.totalItems = state.books.length
       })
       .addCase(searchBooks.rejected, (state, action) => {
@@ -75,7 +82,8 @@ const searchSlice = createSlice({
       })
   },
 })
-export const { setPage, setSearchQueryTitle, setSearchQuery } =
+
+export const { setPage, setSearchQuery, setSearchQueryTitle } =
   searchSlice.actions
 
 export default searchSlice.reducer

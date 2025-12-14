@@ -25,12 +25,8 @@ const SearchPage = () => {
   )
 
   useEffect(() => {
-    if (searchQuery) {
-      dispatch(
-        searchBooks({
-          query: searchQuery,
-        }) as any
-      )
+    if (searchQuery.trim()) {
+      dispatch(searchBooks({ query: searchQuery }) as any)
     }
   }, [searchQuery, dispatch])
 
@@ -55,7 +51,18 @@ const SearchPage = () => {
         <Title title={`Search results "${searchQueryTitle}"`} />
         <div className={style.booksCardWrap}>
           {paginatedBooks.map(
-            ({ title, subtitle, isbn13, price, image, url }: IBookCard) => {
+            ({
+              title,
+              subtitle,
+              isbn13,
+              price,
+              image,
+              url,
+              authors,
+              publisher,
+              pages,
+              desc,
+            }: IBookCard) => {
               return (
                 <div key={isbn13} className={style.bookWrap}>
                   <BookCard
@@ -65,6 +72,10 @@ const SearchPage = () => {
                     price={price}
                     image={image}
                     url={url}
+                    authors={authors}
+                    publisher={publisher}
+                    pages={pages}
+                    desc={desc}
                   />
                 </div>
               )
