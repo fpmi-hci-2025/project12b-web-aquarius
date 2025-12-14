@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { IBook, IBookCard, ISignIn } from "../../types/types"
 import { toggleBookmark, toggleCart } from "../../store/bookSlice"
 import { addToCart, removeFromCart } from "../../store/cartSlice"
+import { isAdmin } from "../../utils/isAdmin"
 
 interface Props extends IBookCard {
   showRemoveButton?: boolean
@@ -26,7 +27,7 @@ const BookCard = ({
   const dispatch = useDispatch()
 
   const { auth } = useSelector((state: ISignIn) => state.signIn)
-
+  const { username } = useSelector((state: any) => state.signIn)
   const bookmarks = useSelector((state: IBook) => state.books.bookmarks)
   const localCart = useSelector((state: any) => state.books.cart || [])
   // Для серверной корзины (авторизованные)
@@ -44,7 +45,7 @@ const BookCard = ({
   const isInCart = auth ? isInServerCart : isInLocalCart
 
   const handleCartToggle = () => {
-    if (auth) {
+    if (auth && !isAdmin(username)) {
       // Для авторизованных: работа с серверной корзиной
       if (isInServerCart) {
         dispatch(removeFromCart(isbn13))

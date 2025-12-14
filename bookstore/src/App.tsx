@@ -25,13 +25,15 @@ import Checkout from "./Pages/Checkout/Checkout"
 import { fetchCart } from "./store/cartSlice"
 import { AsyncThunkAction, AsyncThunkConfig } from "@reduxjs/toolkit"
 import { IBookCard } from "./types/types"
+import { isAdmin } from "./utils/isAdmin"
 
 const App = () => {
   const dispatch = useDispatch()
   const { auth } = useSelector((state: any) => state.signIn)
+  const { username } = useSelector((state: any) => state.signIn)
 
   useEffect(() => {
-    if (auth) {
+    if (auth && !isAdmin(username)) {
       dispatch(fetchCart())
     }
   }, [auth, dispatch])

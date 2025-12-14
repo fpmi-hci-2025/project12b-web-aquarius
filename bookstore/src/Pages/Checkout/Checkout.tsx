@@ -25,6 +25,7 @@ const parsePrice = (p: any): number => {
 const Checkout = () => {
   const navigate = useNavigate()
   const { auth } = useSelector((state: any) => state.signIn)
+  const { username } = useSelector((state: any) => state.signIn)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const Checkout = () => {
       return
     }
 
-    if (auth) {
+    if (auth && !isAdmin(username)) {
       dispatch(fetchCart() as any)
     }
   }, [auth, dispatch])

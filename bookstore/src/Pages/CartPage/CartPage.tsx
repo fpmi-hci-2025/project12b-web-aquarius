@@ -16,6 +16,7 @@ const CartPage = () => {
   const navigate = useNavigate()
 
   const { auth } = useSelector((state: any) => state.signIn)
+  const { username } = useSelector((state: any) => state.signIn)
 
   // Используем правильную корзину в зависимости от авторизации
   const localCart = useSelector((state: any) => state.books.cart || [])
