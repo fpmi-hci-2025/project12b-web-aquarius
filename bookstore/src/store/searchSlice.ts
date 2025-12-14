@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { mapBackendBookToDetails } from "../utils/mapBackendBookToDetails"
 
+const API = "https://bookstore-backend-qgjq.onrender.com/api"
+
 export const searchBooks = createAsyncThunk(
   "search/searchBooks",
   async ({ query }: { query: string }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://bookstore-backend-qgjq.onrender.com/api/books/search"
+        `${API}/books/search?query=${encodeURIComponent(query)}`
       )
 
       if (!response.ok) {
@@ -65,11 +67,17 @@ const searchSlice = createSlice({
         const q = query.toLowerCase()
 
         const filtered = books.filter((b: any) => {
+          const authorsText = Array.isArray(b.authors)
+            ? b.authors.join(" ")
+            : b.authors || ""
+
+          const descriptionText = b.description || b.desc || ""
+
           return (
-            b.title?.toLowerCase().includes(q) ||
-            b.description?.toLowerCase().includes(q) ||
-            b.publisher?.toLowerCase().includes(q) ||
-            b.authors?.join(" ").toLowerCase().includes(q)
+            (b.title || "").toLowerCase().includes(q) ||
+            descriptionText.toLowerCase().includes(q) ||
+            (b.publisher || "").toLowerCase().includes(q) ||
+            authorsText.toLowerCase().includes(q)
           )
         })
 

@@ -30,17 +30,12 @@ const SearchPage = () => {
     }
   }, [searchQuery, dispatch])
 
-  if (loading) {
-    return <div>loading...</div>
-  }
-  if (error) {
-    return <div>Error...</div>
-  }
-
+  // Keep showing previous results while loading to reduce flicker.
   const paginatedBooks = books.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   )
+  const showLoading = loading
   const handlePageChange = (pageNumber: number) => {
     dispatch(setPage(pageNumber))
   }
@@ -49,6 +44,7 @@ const SearchPage = () => {
     <div className={style.searchWrap}>
       <div className={style.container}>
         <Title title={`Search results "${searchQueryTitle}"`} />
+        {showLoading && <div style={{ margin: "8px 0" }}>Searching...</div>}
         <div className={style.booksCardWrap}>
           {paginatedBooks.map(
             ({
