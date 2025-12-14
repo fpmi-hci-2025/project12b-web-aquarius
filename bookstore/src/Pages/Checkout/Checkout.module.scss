@@ -1,0 +1,49 @@
+.checkoutWrap {
+  padding: 24px;
+}
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.itemsTable th,
+.itemsTable td {
+  border: 1px solid #e6e6e6;
+  padding: 8px;
+  text-align: left;
+}
+.summary {
+  margin: 16px 0;
+}
+.formRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.formCol {
+  flex: 1;
+}
+.actions {
+  margin-top: 16px;
+  .paymentBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(34, 49, 170, 1);
+    width: 240px;
+    height: 56px;
+    padding: 16px 32px 16px 32px;
+    border: 1px #fff solid;
+    border-radius: 2px 0px 0px 0px;
+    color: rgba(255, 255, 255, 1);
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 600;
+    margin: auto;
+    margin-top: 40px;
+  }
+}

@@ -20,6 +20,8 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { refreshTokens } from "./store/signInSlice"
 import { hydrateFromLocalStorage } from "./store/bookSlice"
+import Payment from "./Pages/Payment/Payment"
+import Checkout from "./Pages/Checkout/Checkout"
 
 const App = () => {
   const dispatch = useDispatch()
@@ -41,7 +43,9 @@ const App = () => {
           <Route path="/:isbn13" element={<SelectedBook />} />
           <Route path="about" element={<Navigate to={"/about-us"} />} />
           <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route
             path="/cart"
             element={

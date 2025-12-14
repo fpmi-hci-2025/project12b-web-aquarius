@@ -7,9 +7,11 @@ import BookCard from "../../Components/BookCard/BookCard"
 import Pagination from "../../Components/Pagination/Pagination"
 import { IBookCard, IPagination, IBook } from "../../types/types"
 import { toggleCart } from "../../store/bookSlice"
+import { useNavigate } from "react-router-dom"
 
 const CartPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { cart } = useSelector((state: IBook) => state.books)
 
@@ -65,7 +67,21 @@ const CartPage = () => {
             <div>No books in cart yet!</div>
           )}
         </div>
-
+        <div>
+          <button
+            className={style.checkoutBtn}
+            onClick={() => {
+              if (totalItems <= 0) {
+                alert("Нельзя оформить пустую корзину")
+                return
+              }
+              navigate("/checkout")
+            }}
+            disabled={totalItems <= 0}
+          >
+            Оформить заказ
+          </button>
+        </div>
         <div className={style.numbersWrapper}>
           <Pagination
             currentPage={currentPage}
