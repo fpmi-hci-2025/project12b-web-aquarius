@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+   
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "react-scripts test",
+    "build": "react-scripts build"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
