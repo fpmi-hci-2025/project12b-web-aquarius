@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { mapBackendBookToDetails } from "../utils/mapBackendBookToDetails"
 
 export const searchBooks = createAsyncThunk(
   "books/searchBooks",
@@ -6,9 +7,14 @@ export const searchBooks = createAsyncThunk(
     let { query }: any = objectFromBooksPage
 
     try {
-      const response = await fetch(
-        `https://bookstore-backend-qgjq.onrender.com/api/books/search`
+      const url = new URL(
+        "https://bookstore-backend-qgjq.onrender.com/api/books/search"
       )
+      if (query) {
+        url.searchParams.append("query", query)
+      }
+
+      const response = await fetch(url.toString())
 
       if (!response.ok) {
         throw new Error("error")
@@ -16,7 +22,13 @@ export const searchBooks = createAsyncThunk(
 
       const data = await response.json()
 
-      return data
+      // Map backend response to IBookCard format
+      const books = Array.isArray(data) ? data : data.books || []
+      const mappedBooks = books.map((book: any) =>
+        mapBackendBookToDetails(book)
+      )
+
+      return mappedBooks
     } catch (error: any) {
       return rejectWithValue(error.message || "error")
     }
@@ -54,7 +66,7 @@ const searchSlice = createSlice({
       })
       .addCase(searchBooks.fulfilled, (state, action) => {
         state.loading = false
-        state.books = action.payload.books || []
+        state.books = action.payload || []
         state.totalItems = state.books.length
       })
       .addCase(searchBooks.rejected, (state, action) => {

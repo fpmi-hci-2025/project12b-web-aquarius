@@ -79,8 +79,7 @@ const SelectedBook = () => {
               <div className={style.bookInfTable}>
                 <div className={style.bookTableValue}>Price</div>
                 <div className={style.bookTableValue}>{book.price}</div>
-                <div className={style.bookTableValue}>Subtitle</div>
-                <div className={style.bookTableValue}>{book.subtitle}</div>
+
                 <div className={style.bookTableValue}>Authors</div>
                 <div className={style.bookTableValue}>{book.authors}</div>
                 <div className={style.bookTableValue}>Pages</div>

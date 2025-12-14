@@ -25,12 +25,14 @@ const SearchPage = () => {
   )
 
   useEffect(() => {
-    dispatch(
-      searchBooks({
-        query: searchQuery,
-      })
-    )
-  }, [])
+    if (searchQuery) {
+      dispatch(
+        searchBooks({
+          query: searchQuery,
+        }) as any
+      )
+    }
+  }, [searchQuery, dispatch])
 
   if (loading) {
     return <div>loading...</div>

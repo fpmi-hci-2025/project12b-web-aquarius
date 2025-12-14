@@ -117,6 +117,24 @@ const signInSlice = createSlice({
         state.auth = true
         state.username = action.payload?.email || state.username
 
+        // Save firstName and lastName from userDetails
+        if (action.payload?.userDetails) {
+          state.firstName = action.payload.userDetails.firstName || null
+          state.lastName = action.payload.userDetails.lastName || null
+          if (action.payload.userDetails.firstName) {
+            localStorage.setItem(
+              "firstName",
+              action.payload.userDetails.firstName
+            )
+          }
+          if (action.payload.userDetails.lastName) {
+            localStorage.setItem(
+              "lastName",
+              action.payload.userDetails.lastName
+            )
+          }
+        }
+
         if (action.payload?.accessToken) {
           localStorage.setItem("accessToken", action.payload.accessToken)
         }
