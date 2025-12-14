@@ -25,7 +25,6 @@ const initialState: UserState = {
   error: null,
 }
 
-// Получение данных пользователя
 export const fetchUserProfile = createAsyncThunk(
   "user/fetchProfile",
   async (_, { rejectWithValue }) => {
@@ -53,7 +52,6 @@ export const fetchUserProfile = createAsyncThunk(
       }
 
       const data = await response.json()
-      // API возвращает массив пользователей, берем первого (текущего)
       return Array.isArray(data) && data.length > 0 ? data[0] : null
     } catch (error: any) {
       return rejectWithValue(error.message || "Network error")
@@ -79,7 +77,6 @@ const userSlice = createSlice({
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.loading = false
         state.data = action.payload
-        // Сохраняем в localStorage для быстрого доступа
         if (action.payload) {
           localStorage.setItem("firstName", action.payload.firstName || "")
           localStorage.setItem("lastName", action.payload.lastName || "")

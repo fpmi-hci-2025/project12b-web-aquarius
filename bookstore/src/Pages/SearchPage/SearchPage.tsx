@@ -30,7 +30,6 @@ const SearchPage = () => {
     }
   }, [searchQuery, dispatch])
 
-  // Keep showing previous results while loading to reduce flicker.
   const paginatedBooks = books.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage

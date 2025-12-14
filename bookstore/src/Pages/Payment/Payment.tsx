@@ -1,25 +1,63 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import React, { useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 import style from "./Payment.module.scss"
-import { useDispatch, useSelector } from "react-redux"
-import { payOrder } from "../../store/orderSlice"
 
 const Payment = () => {
-  const navigate = useNavigate()
-
   const { orderId } = useParams()
-  const dispatch = useDispatch()
-  const { currentOrder, loading } = useSelector((state: any) => state.orders)
+  const navigate = useNavigate()
+  const [paid, setPaid] = useState(false)
 
-  const onPay = async () => {
-    await dispatch(payOrder(orderId!) as any)
-    alert("Оплата успешна")
-  }
+  const currentOrder = useSelector((state: any) => state.order?.currentOrder)
 
-  if (!orderId) {
+  if (!currentOrder || currentOrder.id !== orderId) {
     return (
       <div className={style.paymentWrap}>
         <div className={style.container}>
-          <div>No order data. Please create an order first.</div>
+          <div className={style.orderBox}>
+            <h2>Order not found</h2>
+            <p>Please create an order first.</p>
+            <div className={style.actionButtons}>
+              <button className={style.homeBtn} onClick={() => navigate("/")}>
+                Return Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const handlePayment = () => {
+    setPaid(true)
+  }
+
+  if (paid) {
+    return (
+      <div className={style.paymentWrap}>
+        <div className={style.container}>
+          <div className={style.successMessage}>
+            <h2>Payment completed</h2>
+            <p>
+              Спасибо за покупку! Ваш заказ <strong>{currentOrder.id}</strong>{" "}
+              оформлен.
+            </p>
+          </div>
+
+          <div className={style.summaryBox}>
+            <div>Items: {currentOrder.items?.length || 0}</div>
+            <div>
+              <strong>
+                Total: {(currentOrder.totalAmount ?? 0).toFixed(2)}
+              </strong>
+            </div>
+          </div>
+
+          <div className={style.actionButtons}>
+            <button className={style.homeBtn} onClick={() => navigate("/")}>
+              Return Home
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -28,24 +66,28 @@ const Payment = () => {
   return (
     <div className={style.paymentWrap}>
       <div className={style.container}>
-        <h2>Payment</h2>
         <div className={style.orderBox}>
-          {/* <div>Items: {orderId.items.length}</div>
-          <div>Items total: {Number(orderId.itemsTotal).toFixed(2)}</div>
-          <div>Delivery: {Number(orderId.delivery).toFixed(2)}</div>
-          <div>
-            <strong>Total: {Number(orderId.total).toFixed(2)}</strong>
-          </div>
-          <button onClick={onPay}>Оплатить</button> */}
-          {currentOrder && (
-            <>
-              <div>Items: {currentOrder.items.length}</div>
-              <div>Total: {currentOrder.totalAmount}</div>
-            </>
-          )}
+          <h2>Payment</h2>
 
-          <div style={{ marginTop: 8 }}>
-            <button onClick={() => navigate("/")}>Return Home</button>
+          <div className={style.summaryBox}>
+            <div>
+              Order ID: <strong>{currentOrder.id}</strong>
+            </div>
+            <div>Items: {currentOrder.items?.length || 0}</div>
+            <div>
+              <strong>
+                Total: {(currentOrder.totalAmount ?? 0).toFixed(2)}
+              </strong>
+            </div>
+          </div>
+
+          <div className={style.actionButtons}>
+            <button className={style.payBtn} onClick={handlePayment}>
+              Pay
+            </button>
+            <button className={style.homeBtn} onClick={() => navigate("/")}>
+              Return Home
+            </button>
           </div>
         </div>
       </div>

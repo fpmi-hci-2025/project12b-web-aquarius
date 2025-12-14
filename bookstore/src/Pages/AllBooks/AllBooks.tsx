@@ -16,7 +16,6 @@ const AllBooks = () => {
     dispatch(fetchBooks())
   }, [])
   useEffect(() => {
-    // Проверьте на дубликаты
     const duplicates = books.filter(
       (book, index) =>
         books.findIndex((b) => b.isbn13 === book.isbn13) !== index
@@ -25,7 +24,6 @@ const AllBooks = () => {
       console.log("Duplicate books found:", duplicates)
     }
 
-    // Проверьте на undefined/null isbn13
     const booksWithoutIsbn = books.filter((b) => !b.isbn13)
     if (booksWithoutIsbn.length > 0) {
       console.log("Books without isbn13:", booksWithoutIsbn)
@@ -52,13 +50,12 @@ const AllBooks = () => {
       <div className={style.container}>
         <div className={style.booksWrap}>
           {paginatedBooks.map((book: IBookCard) => {
-            // Теперь book.isbn13 содержит UUID, который уникален
             return (
               <div key={book.isbn13} className={style.bookWrap}>
                 <BookCard
                   title={book.title}
                   subtitle={book.subtitle}
-                  isbn13={book.isbn13} // Это UUID
+                  isbn13={book.isbn13}
                   price={book.price}
                   image={book.image}
                   url={book.url}

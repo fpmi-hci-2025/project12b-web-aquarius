@@ -22,7 +22,6 @@ const Navbar = () => {
   const { isActive } = useSelector((state: IActive) => state.active)
   const { auth, username } = useSelector((state: ISignIn) => state.signIn)
 
-  // Check if user is admin
   const isAdmin = auth && username === "admin@mail.ru"
 
   const logOutHandler = () => {

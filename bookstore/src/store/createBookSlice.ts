@@ -86,7 +86,6 @@ export const createNewBook = createAsyncThunk(
         )
       }
 
-      // Handle both JSON and empty responses
       const contentType = res.headers.get("content-type")
       let data = null
 

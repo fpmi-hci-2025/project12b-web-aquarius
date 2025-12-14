@@ -18,14 +18,13 @@ import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute"
 import CreateBook from "./Pages/CreateBook/CreateBook"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { refreshTokens } from "./store/signInSlice"
 import { hydrateFromLocalStorage } from "./store/bookSlice"
-import Payment from "./Pages/Payment/Payment"
 import Checkout from "./Pages/Checkout/Checkout"
 import { fetchCart } from "./store/cartSlice"
 import { AsyncThunkAction, AsyncThunkConfig } from "@reduxjs/toolkit"
 import { IBookCard } from "./types/types"
 import { isAdmin } from "./utils/isAdmin"
+import Payment from "./Pages/Payment/Payment"
 
 const App = () => {
   const dispatch = useDispatch()
@@ -39,7 +38,6 @@ const App = () => {
   }, [auth, dispatch])
 
   useEffect(() => {
-    // Restore bookmarks and cart from localStorage on app init
     dispatch(hydrateFromLocalStorage())
   }, [dispatch])
 
@@ -55,7 +53,7 @@ const App = () => {
           <Route path="/:isbn13" element={<SelectedBook />} />
           <Route path="about" element={<Navigate to={"/about-us"} />} />
           <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/payment/:orderId" element={<Payment />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route

@@ -18,7 +18,6 @@ const Person = () => {
 
   const initials = useMemo(() => {
     if (!fullName) {
-      // If no full name, show first letter of email or default icon
       if (username) {
         return username.charAt(0).toUpperCase()
       }

@@ -17,7 +17,6 @@ export const searchBooks = createAsyncThunk(
 
       const data = await response.json()
 
-      // backend возвращает массив
       const books = Array.isArray(data) ? data : []
 
       return { books, query }

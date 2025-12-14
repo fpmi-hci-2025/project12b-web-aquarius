@@ -1,11 +1,163 @@
 .paymentWrap {
   padding: 24px;
+  background-color: rgba(255, 255, 255, 1);
+  min-height: 100vh;
 }
+
 .container {
-  max-width: 800px;
+  max-width: 980px;
   margin: 0 auto;
 }
+
 .orderBox {
   border: 1px solid #e6e6e6;
-  padding: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 1);
+
+  h2 {
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(49, 48, 55, 1);
+    margin-bottom: 24px;
+    margin-top: 0;
+  }
+
+  > div {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(49, 48, 55, 1);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: flex-start;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    padding: 16px 32px;
+    border: none;
+
+    border-radius: 2px;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.payBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(34, 49, 170, 1);
+  width: 132px;
+  height: 56px;
+  padding: 16px 32px 16px 32px;
+  border: 1px #fff solid;
+  border-radius: 2px 0px 0px 0px;
+  color: rgba(255, 255, 255, 1);
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 600;
+  &:hover {
+    background-color: rgba(24, 35, 130, 1);
+  }
+}
+
+.homeBtn {
+  background-color: rgba(232, 232, 232, 1);
+  color: rgba(49, 48, 55, 1);
+  min-width: 180px;
+
+  &:hover {
+    background-color: rgba(215, 215, 215, 1);
+  }
+}
+
+.successMessage {
+  background-color: rgba(240, 248, 245, 1);
+  border-left: 4px solid rgba(34, 170, 105, 1);
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+
+  h2 {
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(34, 170, 105, 1);
+    margin: 0 0 12px 0;
+  }
+
+  p {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(49, 48, 55, 1);
+    margin: 0 0 12px 0;
+    line-height: 1.6;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  > div {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(49, 48, 55, 1);
+    margin-bottom: 8px;
+  }
+}
+
+.summaryBox {
+  background-color: rgba(248, 248, 250, 1);
+  border: 1px solid #e6e6e6;
+  padding: 20px;
+  margin: 24px 0;
+  border-radius: 4px;
+
+  div {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(49, 48, 55, 1);
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      font-weight: 700;
+      font-size: 18px;
+    }
+  }
 }

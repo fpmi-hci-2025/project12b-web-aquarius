@@ -31,7 +31,6 @@ const Search = () => {
 
   const handlerSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // immediate server search on submit
     dispatch(searchBooks({ query: searchQuery }))
     dispatch(setPage(1))
     dispatch(setSearchQueryTitle(searchQuery))
@@ -39,15 +38,12 @@ const Search = () => {
 
   const handlerInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    // update store immediately so the input is controlled by redux
     dispatch(setSearchQuery(value))
 
-    // debounce server search to reduce requests and perceived latency
     if (debounceRef.current) {
       window.clearTimeout(debounceRef.current)
     }
     debounceRef.current = window.setTimeout(() => {
-      // don't dispatch empty queries
       if ((value || "").trim()) {
         dispatch(searchBooks({ query: value }))
         dispatch(setPage(1))

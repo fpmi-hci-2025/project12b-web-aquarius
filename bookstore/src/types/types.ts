@@ -9,10 +9,9 @@ export interface IThemeContext {
 
 import { ChangeEvent, ReactNode } from "react"
 
-// types/types.ts
 export interface IBookCard {
-  isbn13: string // Теперь это UUID из API
-  id?: string // Опционально, если нужно сохранить оригинальный id
+  isbn13: string
+  id?: string
   title: string
   subtitle: string
   price: number

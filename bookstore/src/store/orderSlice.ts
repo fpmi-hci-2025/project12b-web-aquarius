@@ -2,48 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const API = "https://bookstore-backend-qgjq.onrender.com/api"
 
-// export const createOrder = createAsyncThunk(
-//   "orders/create",
-//   async (
-//     {
-//       deliveryAddress,
-//       customerNotes,
-//       items,
-//     }: {
-//       deliveryAddress: string
-//       customerNotes?: string
-//       items: { bookId: string; count: number }[]
-//     },
-//     { rejectWithValue }
-//   ) => {
-//     try {
-//       const token = localStorage.getItem("accessToken")
-
-//       const res = await fetch(`${API}/orders`, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${token}`,
-//         },
-//         body: JSON.stringify({
-//           deliveryAddress,
-//           customerNotes,
-//           orderItems: items,
-//         }),
-//       })
-
-//       if (!res.ok) {
-//         const err = await res.json()
-//         return rejectWithValue(err.message || "Order failed")
-//       }
-
-//       return await res.json() // ← order object
-//     } catch (e: any) {
-//       return rejectWithValue(e.message)
-//     }
-//   }
-// )
-// orderSlice.ts - добавьте логирование
 export const createOrder = createAsyncThunk(
   "orders/create",
   async (
@@ -97,7 +55,6 @@ export const createOrder = createAsyncThunk(
     }
   }
 )
-
 export const payOrder = createAsyncThunk(
   "orders/pay",
   async (orderId: string, { rejectWithValue }) => {
@@ -123,6 +80,33 @@ export const payOrder = createAsyncThunk(
   }
 )
 
+export const fetchOrderDetails = createAsyncThunk(
+  "orders/fetchDetails",
+  async (orderId: string, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("accessToken")
+
+      const res = await fetch(`${API}/orders/${orderId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (!res.ok) {
+        const err = await res.json()
+        return rejectWithValue(
+          err.message || err.detail || "Failed to fetch order"
+        )
+      }
+
+      return await res.json()
+    } catch (e: any) {
+      return rejectWithValue(e.message)
+    }
+  }
+)
+
 const orderSlice = createSlice({
   name: "orders",
   initialState: {
@@ -133,15 +117,18 @@ const orderSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createOrder.pending, (state) => {
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.currentOrder = action.payload
+      })
+      .addCase(fetchOrderDetails.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(createOrder.fulfilled, (state, action) => {
+      .addCase(fetchOrderDetails.fulfilled, (state, action) => {
         state.loading = false
         state.currentOrder = action.payload
       })
-      .addCase(createOrder.rejected, (state, action) => {
+      .addCase(fetchOrderDetails.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })

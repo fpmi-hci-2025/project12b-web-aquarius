@@ -28,7 +28,6 @@ const initialState: SignInState = {
   refreshToken: localStorage.getItem("refreshToken") || null,
 }
 
-// POST /api/auth/sign-in -> { accessToken, refreshToken }
 export const signInUser = createAsyncThunk(
   "signIn/signInUser",
   async (credentials: Credentials, { rejectWithValue }) => {
@@ -49,7 +48,6 @@ export const signInUser = createAsyncThunk(
       }
       localStorage.setItem("accessToken", data.accessToken)
       localStorage.setItem("refreshToken", data.refreshToken)
-      // expect { accessToken, refreshToken }
       return { ...data, email: credentials.email }
     } catch (e: any) {
       return rejectWithValue(e.message || "Network error")
@@ -74,10 +72,8 @@ export const loginAndFetchUser = createAsyncThunk(
   "signIn/loginAndFetchUser",
   async (credentials: Credentials, { dispatch, rejectWithValue }) => {
     try {
-      // 1. Вход
       const loginResult = await dispatch(signInUser(credentials)).unwrap()
 
-      // 2. Получение данных пользователя
       await dispatch(fetchUserProfile()).unwrap()
 
       return loginResult
@@ -122,7 +118,6 @@ const signInSlice = createSlice({
         state.accessToken = action.payload.accessToken
 
         localStorage.setItem("accessToken", action.payload.accessToken)
-        // Save firstName and lastName from userDetails
         console.log("New token stored:", localStorage.getItem("accessToken"))
 
         if (action.payload?.userDetails) {

@@ -13,21 +13,17 @@ export const signUpUser = createAsyncThunk(
   "auth/signUpUser",
   async (userData: ISignUpData, { rejectWithValue }) => {
     try {
-      // Форматируем дату рождения в YYYY-MM-DD
       let formattedDateOfBirth = userData.dateOfBirth || null
       if (formattedDateOfBirth) {
-        // Преобразуем "DD-MM-YYYY" в "YYYY-MM-DD"
         const parts = formattedDateOfBirth.split("-")
         if (parts.length === 3 && parts[2].length === 4) {
-          // Если формат DD-MM-YYYY
           formattedDateOfBirth = `${parts[2]}-${parts[1]}-${parts[0]}`
         }
-        // Если уже YYYY-MM-DD, оставляем как есть
       }
 
       const payload = {
         email: userData.email,
-        passwordHash: userData.password, // Переименовано с passwordHash на password
+        passwordHash: userData.password,
         firstName: userData.firstName,
         lastName: userData.lastName || "",
         phone: userData.phone || "",

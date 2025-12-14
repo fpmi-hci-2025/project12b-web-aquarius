@@ -44,7 +44,6 @@ const SelectedBook = () => {
     return <div>Error...</div>
   }
 
-  // Guard: if book data is not yet available, show loading fallback.
   if (!book) {
     return <div>Loading...</div>
   }

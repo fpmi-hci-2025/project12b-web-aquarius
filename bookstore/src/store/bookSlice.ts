@@ -4,7 +4,6 @@ import { IBookCard } from "../types/types"
 const BOOKMARKS_KEY = "app_bookmarks"
 const CART_KEY = "app_cart"
 
-// Helper to save to localStorage
 const saveBookmarks = (bookmarks: IBookCard[]) => {
   try {
     localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks))
@@ -21,7 +20,6 @@ const saveCart = (cart: IBookCard[]) => {
   }
 }
 
-// Thunk to hydrate from localStorage on app init
 export const hydrateFromLocalStorage = createAsyncThunk(
   "books/hydrateFromLocalStorage",
   async () => {

@@ -1,17 +1,15 @@
 import { useEffect, useMemo, useState } from "react"
 import style from "./Checkout.module.scss"
 import { useSelector } from "react-redux"
-import { IBookCard } from "../../types/types"
 import { useNavigate } from "react-router-dom"
 import Input from "../../Components/Input/Input"
 import { useDispatch } from "react-redux"
 import { createOrder } from "../../store/orderSlice"
 import { fetchCart } from "../../store/cartSlice"
 import { isAdmin } from "../../utils/isAdmin"
+import Textarea from "../../Components/Textarea/Textarea"
 
 const parsePrice = (p: any): number => {
-  console.log("Parsing price:", p, typeof p)
-
   if (typeof p === "number") return p
   if (!p) return 0
 
@@ -19,10 +17,9 @@ const parsePrice = (p: any): number => {
     .replace(/[^0-9.,-]/g, "")
     .replace(/,/g, ".")
   const n = parseFloat(s)
-  const result = isNaN(n) ? 0 : n
-  console.log("Parsed result:", result)
-  return result
+  return isNaN(n) ? 0 : n
 }
+
 const Checkout = () => {
   const navigate = useNavigate()
   const { auth } = useSelector((state: any) => state.signIn)
@@ -41,53 +38,31 @@ const Checkout = () => {
     }
   }, [auth, dispatch])
 
-  const localCart: IBookCard[] = useSelector(
-    (state: any) => state.books.cart || []
-  )
-  const serverCart: any[] = useSelector((state: any) => state.cart.items || [])
-
   const cartItems = useSelector((state: any) => state.cart.items || [])
-  useEffect(() => {
-    console.log("Full cart items:", cartItems)
-    console.log(
-      "Cart items mapped:",
-      cartItems.map((it: any) => ({
-        id: it.bookId,
-        title: it.title,
-        price: it.price,
-        rawPrice: it.price,
-        parsedPrice: parsePrice(it.price),
-      }))
-    )
-  }, [cartItems])
-
   const items = useMemo(
     () =>
       cartItems.map((it: any) => ({
         id: it.bookId,
         title: it.title,
-        price: parsePrice(it.price), // Парсим здесь
-        rawPrice: it.price, // Сохраняем оригинальную цену для отладки
+        price: parsePrice(it.price),
+        rawPrice: it.price,
         quantity: it.quantity ?? 1,
       })),
     [cartItems]
   )
 
   const [quantities, setQuantities] = useState<Record<string, number>>({})
-
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
+  const [review, setReview] = useState("")
 
   const lineItems = useMemo(() => {
     return items.map((it: { id: string | number; price: number }) => {
-      const qty = quantities[it.id] || 0
+      const qty = quantities[it.id] == undefined ? 1 : quantities[it.id]
       return { ...it, quantity: qty, lineTotal: it.price * qty }
     })
   }, [items, quantities])
-  console.log("ITEMS", items)
-  console.log("QUANTITIES", quantities)
-  console.log("LINE ITEMS", lineItems)
 
   const itemsTotal = lineItems.reduce(
     (s: any, i: { lineTotal: any }) => s + i.lineTotal,
@@ -121,7 +96,7 @@ const Checkout = () => {
     const result = await dispatch(
       createOrder({
         deliveryAddress: address,
-        customerNotes: `Email: ${email}, Name: ${name}`,
+        customerNotes: `Email: ${email}, Name: ${name}, Review: ${review}`,
         items: orderItems,
       }) as any
     )
@@ -138,7 +113,6 @@ const Checkout = () => {
     <div className={style.checkoutWrap}>
       <div className={style.container}>
         <h2>Checkout</h2>
-
         <table className={style.itemsTable}>
           <thead>
             <tr>
@@ -168,7 +142,6 @@ const Checkout = () => {
             ))}
           </tbody>
         </table>
-
         <div className={style.summary}>
           <div>Items total: {itemsTotal.toFixed(2)}</div>
           <div>Delivery: {delivery.toFixed(2)}</div>
@@ -176,7 +149,6 @@ const Checkout = () => {
             <strong>Total: {total.toFixed(2)}</strong>
           </div>
         </div>
-
         <h3>Customer</h3>
         <div className={style.formRow}>
           <div className={style.formCol}>
@@ -201,7 +173,6 @@ const Checkout = () => {
             />
           </div>
         </div>
-
         <h3>Delivery address</h3>
         <div>
           <Input
@@ -213,10 +184,19 @@ const Checkout = () => {
             value={address}
           />
         </div>
-
+        <h3>Your review</h3>
+        <div>
+          <Textarea
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="Write your review here"
+            rows={4}
+            className={style.textarea}
+          />
+        </div>
         <div className={style.actions}>
           <button className={style.paymentBtn} onClick={onSubmit}>
-            Proceed to payment
+            <p>Proceed to payment</p>
           </button>
         </div>
       </div>
