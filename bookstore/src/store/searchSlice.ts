@@ -8,7 +8,7 @@ export const searchBooks = createAsyncThunk(
   async ({ query }: { query: string }, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `${API}/books/search?query=${encodeURIComponent(query)}`
+        `${API}/books/search?PageSize=100&query=${encodeURIComponent(query)}`
       )
 
       if (!response.ok) {

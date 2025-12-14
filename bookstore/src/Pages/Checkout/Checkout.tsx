@@ -7,6 +7,7 @@ import Input from "../../Components/Input/Input"
 import { useDispatch } from "react-redux"
 import { createOrder } from "../../store/orderSlice"
 import { fetchCart } from "../../store/cartSlice"
+import { isAdmin } from "../../utils/isAdmin"
 
 const parsePrice = (p: any): number => {
   console.log("Parsing price:", p, typeof p)

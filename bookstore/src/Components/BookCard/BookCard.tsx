@@ -219,7 +219,7 @@ const BookCard = ({
             />
           </button>
 
-          {auth && (
+          {auth && !isAdmin(username) && (
             <button onClick={handleCartToggle} className={style.faCartShopping}>
               <FontAwesomeIcon
                 icon={faCartShopping}

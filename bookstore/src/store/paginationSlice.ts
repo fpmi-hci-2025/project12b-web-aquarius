@@ -7,7 +7,7 @@ export const fetchBooks = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://bookstore-backend-qgjq.onrender.com/api/books/search"
+        "https://bookstore-backend-qgjq.onrender.com/api/books/search/?PageSize=100"
       )
 
       if (!response.ok) {
