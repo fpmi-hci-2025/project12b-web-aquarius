@@ -153,8 +153,6 @@ const cartSlice = createSlice({
               quantity: item.quantity || 1,
             }
           })
-
-          localStorage.setItem("cart_cache", JSON.stringify(state.items))
         } else if (Array.isArray(response)) {
           state.items = response.map((item: any) => ({
             bookId: item.bookId || item.id,
@@ -173,14 +171,6 @@ const cartSlice = createSlice({
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
-        const cache = localStorage.getItem("cart_cache")
-        if (cache) {
-          try {
-            state.items = JSON.parse(cache)
-          } catch (e) {
-            state.items = []
-          }
-        }
       })
       .addCase(addToCart.pending, (state) => {
         state.loading = true
