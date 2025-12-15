@@ -112,7 +112,7 @@ const CartPage = () => {
             }}
             disabled={totalItems <= 0}
           >
-            Оформить заказ
+            Go to checkout
           </button>
         </div>
         <div className={style.numbersWrapper}>
