@@ -4,17 +4,16 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 COPY bookstore/package*.json ./
-
 RUN npm ci
 
 COPY bookstore/. .
-
 RUN npm run build
 
 # Этап запуска через nginx
 FROM nginx:alpine
 
-COPY --from=build /app/build /usr/share/nginx/html
+# Vite → артефакты лежат в /app/dist
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
