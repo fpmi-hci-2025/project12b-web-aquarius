@@ -7,7 +7,7 @@ COPY bookstore/package*.json ./
 
 RUN npm ci
 
-COPY bookstore ./
+COPY bookstore/. .
 
 RUN npm run build
 
